@@ -1,0 +1,33 @@
+.wrapper{
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 5px 0;
+}
+
+.wrapper:hover{
+    background-color: #f1f3f4;
+}
+
+.input {
+    background: none;
+    outline: none;
+    overflow: hidden;
+    border: none;
+    width: 540px;
+    height: 19px;
+    resize: none;
+    padding: 5px 3px;
+    margin: 0 0 0 12px;
+    font: 400 15px/25px 'Arial',sans-serif;
+}
+
+.input:hover{
+    border-bottom: 1px solid rgb(80, 78, 78);
+}
+
+.button{
+    border: none;
+    background: none;
+    cursor: pointer;
+}
