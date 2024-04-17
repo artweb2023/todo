@@ -1,12 +1,10 @@
 import { TaskActions } from "./actions";
+import { Task } from "../model/types";
 
-function createAddTaskAction(taskId: string, newTask: string) {
+function createAddTaskAction(task: Task) {
   return {
     type: TaskActions.ADD_TASK,
-    payload: {
-      taskId,
-      newTask,
-    },
+    payload: task,
   };
 }
 

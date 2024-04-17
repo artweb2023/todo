@@ -1,3 +1,5 @@
+import { Task } from "../model/types";
+
 enum TaskActions {
   ADD_TASK = "ADD_TASK",
   DELETE_TASK = "DELETE_TASK",
@@ -8,10 +10,7 @@ enum TaskActions {
 
 type AddTaskAction = {
   type: TaskActions.ADD_TASK;
-  payload: {
-    taskId: string;
-    newTask: string;
-  };
+  payload: Task;
 };
 
 type DeletedTaskAction = {

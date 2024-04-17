@@ -1,16 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import style from "./ListView.module.css";
 import { AddTaskView } from "./AddTaskView";
 import { TaskView } from "./TaskView";
+import { useAppSelector } from "../redux/hooks";
 
 function ListView() {
+  const [countCompletedTask, setCountCompletedTask] = useState(0);
   const [isShowAdd, setShowAdd] = useState(false);
   const [isVisibleCompleted, setVisibleCompleted] = useState(false);
+  const allTasks = useAppSelector((state) => state.tasks);
+  const completedTasks = allTasks.filter((task) => task.isCompleted);
+  const incompleteTasks = allTasks.filter((task) => !task.isCompleted);
+
+  useEffect(() => {
+    setCountCompletedTask(completedTasks.length);
+  }, [completedTasks]);
+
   const handleOpenAddTask = () => {
-    if (!isShowAdd) {
-      setShowAdd(true);
-    } else {
+    if (isShowAdd) {
       setShowAdd(false);
+    } else {
+      setShowAdd(true);
     }
   };
   const handleCloseAddTask = () => {
@@ -52,8 +62,9 @@ function ListView() {
       </button>
       {isShowAdd && <AddTaskView onClose={handleCloseAddTask}></AddTaskView>}
       <div className={style.current_container}>
-        <TaskView></TaskView>
-        <TaskView></TaskView>
+        {incompleteTasks.map((task) => (
+          <TaskView key={task.id} task={task} />
+        ))}
       </div>
       <div className={style.completed_container}>
         <div className={style.wrapper}>
@@ -61,9 +72,14 @@ function ListView() {
             className={classNames}
             onClick={handleVisibleCompleted}
           ></button>
-          <h2 className={style.subtitle}>Completed (1)</h2>
+          <h2 className={style.subtitle}>Completed ({countCompletedTask})</h2>
         </div>
-        {isVisibleCompleted && <TaskView></TaskView>}
+        <div className={style.completed}>
+          {completedTasks.map(
+            (task) =>
+              isVisibleCompleted && <TaskView key={task.id} task={task} />,
+          )}
+        </div>
       </div>
     </div>
   );

@@ -44,14 +44,20 @@ button:hover{
 
 .current_container {
   border-top: solid 1px #f1f3f4;
-  overflow: auto;
   padding: 16px 0;
+  overflow: auto;
 }
 
 .completed_container {
   border-top: solid 1px #f1f3f4;
   overflow: auto;
   padding: 16px 0;
+}
+
+.completed {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 }
 
 .wrapper {

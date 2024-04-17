@@ -26,6 +26,10 @@
     border-bottom: 1px solid rgb(80, 78, 78);
 }
 
+.border_alert {
+    border-bottom: 1px solid rgba(232, 105, 97, 1);
+}
+
 .button{
     border: none;
     background: none;

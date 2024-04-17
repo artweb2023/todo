@@ -1,17 +1,36 @@
+import { useState } from "react";
 import style from "./AddTaskView.module.css";
+import { useAppActions } from "../redux/hooks";
+import { getTask } from "../utils/utils";
 
 type TaskProps = {
   onClose: () => void;
 };
 
 function AddTaskView({ onClose }: TaskProps) {
+  const { createAddTaskAction } = useAppActions();
+  const [taskInput, setTaskInput] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskInput(event.target.value);
+  };
+
+  const handleButtonClick = () => {
+    setIsClicked(true);
+    if (taskInput.trim() !== "") {
+      onClose();
+      createAddTaskAction(getTask(taskInput));
+    }
+  };
   return (
     <div className={style.wrapper}>
       <input
-        className={style.input}
+        className={`${style.input} ${isClicked && taskInput.trim() === "" ? style.border_alert : ""}`}
         placeholder="What needs to be Done?"
+        value={taskInput}
+        onChange={handleInputChange}
       ></input>
-      <button className={style.button} onClick={onClose}>
+      <button className={style.button} onClick={handleButtonClick}>
         <svg
           width="24"
           height="24"
