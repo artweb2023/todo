@@ -4,6 +4,8 @@
   background: #fff;
   max-width: 680px;
   min-width: 320px;
+  max-height: 493px;
+  min-height: 180px;
   border: solid 1px #f1f3f4;
   border-radius: 16px;
   margin: 50px 0;
@@ -46,6 +48,7 @@ button:hover{
   border-top: solid 1px #f1f3f4;
   padding: 16px 0;
   overflow: auto;
+  min-height: 185px;
 }
 
 .completed_container {

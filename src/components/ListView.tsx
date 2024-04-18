@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import style from "./ListView.module.css";
 import { AddTaskView } from "./AddTaskView";
 import { TaskView } from "./TaskView";
+import { TaskImageView } from "./TastImageView";
 import { useAppSelector } from "../redux/hooks";
 
 function ListView() {
@@ -37,6 +38,10 @@ function ListView() {
     isVisibleCompleted ? style.arrow_down : style.arrow_right
   }
   `;
+  const classEmptyTask = "img_notask";
+  const textEmptyTask = "No tasks yet";
+  const classCompleted = "img_task_completed";
+  const textCompleted = "All tasks complete";
   return (
     <div className={style.list}>
       <h1 className={style.title}>Мои задачи</h1>
@@ -62,25 +67,33 @@ function ListView() {
       </button>
       {isShowAdd && <AddTaskView onClose={handleCloseAddTask}></AddTaskView>}
       <div className={style.current_container}>
+        {allTasks.length === 0 && (
+          <TaskImageView className={classEmptyTask} text={textEmptyTask} />
+        )}
+        {incompleteTasks.length === 0 && allTasks.length !== 0 && (
+          <TaskImageView className={classCompleted} text={textCompleted} />
+        )}
         {incompleteTasks.map((task) => (
           <TaskView key={task.id} task={task} />
         ))}
       </div>
-      <div className={style.completed_container}>
-        <div className={style.wrapper}>
-          <button
-            className={classNames}
-            onClick={handleVisibleCompleted}
-          ></button>
-          <h2 className={style.subtitle}>Completed ({countCompletedTask})</h2>
+      {completedTasks.length !== 0 && (
+        <div className={style.completed_container}>
+          <div className={style.wrapper}>
+            <button
+              className={classNames}
+              onClick={handleVisibleCompleted}
+            ></button>
+            <h2 className={style.subtitle}>Completed ({countCompletedTask})</h2>
+          </div>
+          <div className={style.completed}>
+            {completedTasks.map(
+              (task) =>
+                isVisibleCompleted && <TaskView key={task.id} task={task} />,
+            )}
+          </div>
         </div>
-        <div className={style.completed}>
-          {completedTasks.map(
-            (task) =>
-              isVisibleCompleted && <TaskView key={task.id} task={task} />,
-          )}
-        </div>
-      </div>
+      )}
     </div>
   );
 }
