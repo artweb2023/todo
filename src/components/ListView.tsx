@@ -3,7 +3,7 @@ import style from "./ListView.module.css";
 import { AddTaskView } from "./AddTaskView";
 import { TaskView } from "./TaskView";
 import { TaskImageView } from "./TastImageView";
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector, useAppActions } from "../redux/hooks";
 
 function ListView() {
   const [countCompletedTask, setCountCompletedTask] = useState(0);
@@ -12,7 +12,7 @@ function ListView() {
   const allTasks = useAppSelector((state) => state.tasks);
   const completedTasks = allTasks.filter((task) => task.isCompleted);
   const incompleteTasks = allTasks.filter((task) => !task.isCompleted);
-
+  const { createUndoAction, createRedoAction } = useAppActions();
   useEffect(() => {
     setCountCompletedTask(completedTasks.length);
   }, [completedTasks]);
@@ -44,7 +44,15 @@ function ListView() {
   const textCompleted = "All tasks complete";
   return (
     <div className={style.list}>
-      <h1 className={style.title}>Мои задачи</h1>
+      <div className={style.header}>
+        <h1 className={style.title}>Мои задачи</h1>
+        <button className={style.buttons} onClick={() => createUndoAction()}>
+          UNDO
+        </button>
+        <button className={style.buttons} onClick={() => createRedoAction()}>
+          REDO
+        </button>
+      </div>
       <button className={style.button} onClick={handleOpenAddTask}>
         <svg
           enableBackground="new 0 0 24 24"
